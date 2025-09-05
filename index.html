@@ -1,0 +1,77 @@
+<!<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Matrix - Eu Te Amo - Pro Yan</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: black;
+    }
+
+    canvas {
+      display: block;
+    }
+
+    /* Esconde o player de áudio */
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Música de fundo (você pode trocar o link pelo seu mp3) -->
+  <audio autoplay loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    Seu navegador não suporta áudio HTML5.
+  </audio>
+
+  <canvas id="matrixCanvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById("matrixCanvas");
+    const ctx = canvas.getContext("2d");
+
+    // Tamanho do canvas
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Texto que vai cair
+    const text = "Eu Te Amo";
+    const fontSize = 24;
+    const textLength = text.length;
+    const columns = Math.floor(canvas.width / (textLength * fontSize));
+    const drops = Array(columns).fill(0);
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#FF69B4"; // Rosa 💗
+      ctx.font = `${fontSize}px 'Courier New', monospace`;
+
+      for (let i = 0; i < drops.length; i++) {
+        const x = i * textLength * fontSize;
+        const y = drops[i] * fontSize;
+
+        ctx.fillText(text, x, y);
+
+        if (y > canvas.height && Math.random() > 0.95) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 75);
+
+    // Atualiza canvas ao redimensionar
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
